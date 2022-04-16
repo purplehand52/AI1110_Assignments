@@ -21,5 +21,5 @@ plt.grid()
 plt.legend(["Line of y wrt x", "Line of x wrt y"])
 
 #Save
-#plt.savefig("../figs/plot.png")
+plt.savefig("../figs/plot.png")
 plt.show()
