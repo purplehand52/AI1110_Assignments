@@ -262,10 +262,10 @@ columns=fullflexible
              \end{align}
 \end{problem}
 
-%Solution--------------------------------------------------
+%Solution
 \solution
 
-%Lines in Vector forms--------------------------------------
+%Derivation of relations
 Given data as n ordered pairs
 \begin{align}
   \myvec{x_1\\y_1}, \myvec{x_2\\y_2}, ..., \myvec{x_n\\y_n}
@@ -287,18 +287,70 @@ Regression line of $x$ on $y$ in parametric form is
 %Assumption------------------------------------------------
 We shall assume that
 \eqref{eq:Line1}
-is the regression line of $y$ on $x$ and express it as
+is the regression line of $y$ on $x$ and
+\eqref{eq:Line2}
+is the regression line of $x$ on $y$.
+
+%Conversion to slope form-------------------------------------
+Note that any equation of the form
 \begin{align}
-  \myvec{0\\6} + \lambda\myvec{1\\2}
-  \label{eq:Vec1}
+  y = mx + c
+  \label{eq:Slope}
+\end{align}
+can be expressed in vector form as
+\begin{align}
+  \myvec{0\\c} + \lambda\myvec{1\\m}
+  \label{eq:Vec}
 \end{align}
 
-And \eqref{eq:Line2}
-is the regression line of $x$ on $y$ and express it as
+From
+\eqref{eq:Line1}
+we have
 \begin{align}
-  \myvec{\frac{-1}{4}\\0} + \lambda\myvec{\frac{5}{4}\\1}
-  \label{eq:Vec2}
+  y = \frac{x}{2} + \frac{3}{2}
+  \label{eq:Slope1}
 \end{align}
+
+From
+\eqref{eq:Line2}
+we have
+\begin{align}
+  y = \frac{4x}{5} + \frac{1}{5}
+  \label{eq:Slope2}
+\end{align}
+
+%Conversion to vector form-----------------------------
+Similar to conversion of
+\eqref{eq:Slope}
+to
+\eqref{eq:Vec}
+we can write vector form of
+\eqref{eq:Slope1}
+as
+\begin{align}
+  \myvec{0\\\frac{3}{2}} + \lambda\myvec{1\\\frac{1}{2}}
+  \label{eq:Vec1}  
+\end{align}
+
+We can similarly write vector form of
+\eqref{eq:Slope2}
+as
+\begin{align}
+  \myvec{0\\\frac{1}{5}} + \lambda\myvec{1\\\frac{4}{5}}
+  \\
+  \Rightarrow \myvec{0\\\frac{1}{5}} - \frac{1}{4}\myvec{1\\\frac{4}{5}} + (\lambda + \frac{1}{4})\myvec{1\\\frac{4}{5}}
+  \\
+  \Rightarrow \myvec{0\\\frac{1}{5}} - \myvec{\frac{1}{4}\\\frac{1}{5}} + (\mu)\myvec{1\\\frac{4}{5}}
+  \\
+  \Rightarrow \myvec{\frac{-1}{4}\\0} + (\frac{4}{5})(\frac{5}{4})(\mu)\myvec{1\\\frac{4}{5}}
+  \\
+  \Rightarrow \myvec{\frac{-1}{4}\\0} + (\frac{4\mu}{5})\myvec{\frac{5}{4}\\1}
+  \\
+  \Rightarrow \myvec{\frac{-1}{4}\\0} + \gamma\myvec{\frac{5}{4}\\1}
+  \label{eq:Vec2}  
+\end{align}
+
+(Note that we have arbitrarily defined $\mu = \lambda + \frac{1}{4}$ and $\gamma = \frac{4\mu}{5}$)
 
 %Regression coefficents b_yx and b_xy--------------------
 Comparing
@@ -314,7 +366,7 @@ we evaluate regression coefficents $b_{yx}$ and $b_{xy}$ as
   \label{eq:Regression_xy}
 \end{align}
 
-%Finding r----------------------------------------------------
+%Finding r
 Given $b_{yx}$ and $b_{xy}$, we can find the coefficient of correlation $r$ as
 \begin{align}
   r = \pm\sqrt{b_{yx} \times b_{xy}}
