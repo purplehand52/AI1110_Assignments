@@ -265,33 +265,46 @@ columns=fullflexible
 %Solution
 \solution
 
+%Derivation of relations
+Given data as n ordered pairs
+\begin{align}
+  \myvec{x_1\\y_1}, \myvec{x_2\\y_2}, ..., \myvec{x_n\\y_n}
+\end{align}
+
+Regression line of $y$ on $x$ in parametric form is
+\begin{align}
+  \myvec{0\\c_{yx}} + \lambda\myvec{1\\b_{yx}}
+  \label{eq:Main_yx}
+\end{align}
+
+Regression line of $x$ on $y$ in parametric form is
+\begin{align}
+  \myvec{c_{xy}\\0} + \lambda\myvec{b_{xy}\\1}
+  \label{eq:Main_xy}
+\end{align}
+
+
 %Assumption------------------------------------------------
 We shall assume that
 \eqref{eq:Line1}
-is the regression line of $y$ on $x$ and
-\eqref{eq:Line2}
-is the regression line of $x$ on $y$.
-
-%Bring to form y = mx + c and x = ny + d---------------------
-From
-\eqref{eq:Line1}
+is the regression line of $y$ on $x$ and express it as
 \begin{align}
-  y = \frac{x}{2} + \frac{3}{2}
-  \label{eq:Simplified1}
+  \myvec{0\\6} + \lambda\myvec{1\\2}
+  \label{eq:Vec1}
 \end{align}
 
-From
-\eqref{eq:Line2}
+And \eqref{eq:Line2}
+is the regression line of $x$ on $y$ and express it as
 \begin{align}
-  x = \frac{5y}{4} - \frac{1}{4}
-  \label{eq:Simplified2}
+  \myvec{\frac{-1}{4}\\0} + \lambda\myvec{\frac{5}{4}\\1}
+  \label{eq:Vec2}
 \end{align}
 
 %Regression coefficents b_yx and b_xy--------------------
-From
-\eqref{eq:Simplified1}
+Comparing
+\eqref{eq:Main_yx} with \eqref{eq:Vec1}
 and
-\eqref{eq:Simplified2},
+\eqref{eq:Main_xy} with \eqref{eq:Vec2},
 we evaluate regression coefficents $b_{yx}$ and $b_{xy}$ as
 \begin{align}
   &b_{yx} = \frac{1}{2}
@@ -326,7 +339,7 @@ Since $b_{yx} > 0$ and $b_{xy} > 0$, $r > 0$. Also note that $\abs{r} \le 1$. He
 %Figure
 \begin{figure}[!ht]
   \centering
-  \includegraphics[width=\columnwidth]{../figs/plot.png}
+  \includegraphics[width=\columnwidth]{Figures/Figure_1.png}
   \label{Figure_1}
 \end{figure}
 
