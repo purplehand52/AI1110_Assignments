@@ -319,6 +319,21 @@ we have
   \label{eq:Slope2}
 \end{align}
 
+We can tabulate parameters $m$, $c$ from lines
+\eqref{eq:Slope1}
+and
+\eqref{eq:Slope2}
+as shown in Table
+\eqref{table:Para_table}
+
+\begin{table}[!ht]
+  \centering
+  \input{table.tex}
+  \caption{Table of Parameters}
+  \label{table:Para_table}	
+\end{table}
+
+
 %Conversion to vector form-----------------------------
 Similar to conversion of
 \eqref{eq:Slope}
@@ -366,7 +381,7 @@ we evaluate regression coefficents $b_{yx}$ and $b_{xy}$ as
   \label{eq:Regression_xy}
 \end{align}
 
-%Finding r
+%Finding r----------------------------------------------------
 Given $b_{yx}$ and $b_{xy}$, we can find the coefficient of correlation $r$ as
 \begin{align}
   r = \pm\sqrt{b_{yx} \times b_{xy}}
@@ -388,7 +403,7 @@ Since $b_{yx} > 0$ and $b_{xy} > 0$, $r > 0$. Also note that $\abs{r} \le 1$. He
   \therefore r = \sqrt{\frac{5}{8}}
 \end{align}
 
-%Figure
+%Figure-------------------------------------------------------
 \begin{figure}[!ht]
   \centering
   \includegraphics[width=\columnwidth]{Figures/Figure_1.png}
