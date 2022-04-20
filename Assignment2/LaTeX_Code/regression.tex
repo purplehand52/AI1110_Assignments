@@ -262,10 +262,10 @@ columns=fullflexible
              \end{align}
 \end{problem}
 
-%Solution
+%Solution--------------------------------------------------
 \solution
 
-%Derivation of relations
+%Derivation of relations----------------------------------------
 Given data as n ordered pairs
 \begin{align}
   \myvec{x_1\\y_1}, \myvec{x_2\\y_2}, ..., \myvec{x_n\\y_n}
@@ -292,12 +292,33 @@ is the regression line of $y$ on $x$ and
 is the regression line of $x$ on $y$.
 
 %Conversion to slope form-------------------------------------
-Note that any equation of the form
+Consider any equation of the form
 \begin{align}
   y = mx + c
-  \label{eq:Slope}
+  \label{eq:SlopeForm}
 \end{align}
-can be expressed in vector form as
+
+Substituting $x = 0$ in
+\eqref{eq:SlopeForm}
+we get $y = c$. This point can be represented in vector form as follows
+\begin{align}
+  \vec{P} = \myvec{0\\c}
+  \label{eq:Point}
+\end{align}
+
+Given slope $m$, the direction vector of the line is given as
+\begin{align}
+  \vec{m} = \myvec{1\\m}
+  \label{eq:DirVec}
+\end{align}
+
+Hence from
+\eqref{eq:Point}
+and
+\eqref{eq:DirVec}
+we write
+\eqref{eq:SlopeForm}
+in vector form as
 \begin{align}
   \myvec{0\\c} + \lambda\myvec{1\\m}
   \label{eq:Vec}
@@ -309,7 +330,7 @@ we have
 \begin{align}
   y = \frac{x}{2} + \frac{3}{2}
   \label{eq:Slope1}
-\end{align}
+\end{align} 
 
 From
 \eqref{eq:Line2}
@@ -319,7 +340,7 @@ we have
   \label{eq:Slope2}
 \end{align}
 
-We can tabulate parameters $m$, $c$ from lines
+We can tabulate parameters $\vec{P}$, $\vec{m}$ from lines
 \eqref{eq:Slope1}
 and
 \eqref{eq:Slope2}
@@ -336,7 +357,7 @@ as shown in Table
 
 %Conversion to vector form-----------------------------
 Similar to conversion of
-\eqref{eq:Slope}
+\eqref{eq:SlopeForm}
 to
 \eqref{eq:Vec}
 we can write vector form of
