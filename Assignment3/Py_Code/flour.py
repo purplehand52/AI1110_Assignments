@@ -1,27 +1,18 @@
-#Import openyxl module
-import openpyxl
+#Import pandas
+import pandas
+import numpy
 
-#Open workbook
-workbook = openpyxl.load_workbook("flour.xlsx")
-worksheet = workbook.active
+#Load data
+weights = pandas.read_excel("flour.xlsx")
 
-#Iterate loop
-sample = []
-for i in range(0, worksheet.max_row):
-    for j in worksheet.iter_cols(1, worksheet.max_column):
-        sample.append(j[i].value)
-
-#n(Sample_Space)
+#Sample Space
+sample = list(weights["Weights"])
 n_s = len(sample)
 
-#Random variable
-n_x = 0
-for i in sample:
-    if i > 5:
-        n_x = n_x + 1
-    else:
-        pass
+#Favourable random variables : X > 5
+n_x = numpy.count_nonzero(weights > 5)
 
-#Probability
+#Answer
 prob = n_x/n_s
-print("Probability is", prob)
+print("The probability that random variable X > 5 is", prob);
+
