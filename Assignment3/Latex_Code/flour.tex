@@ -268,13 +268,23 @@ columns=fullflexible
 \solution
 
 %Random Variable-------------------------------------------
-We will define random variable $X$ such that $X \in \mathbb{R}$ and $X$ represents the weight of the bag.
+We will define random variable $X$ such that $X \in {0, 1}$. We will assign $X = 1$ when the weight of the bag exceeds 5 and $X = 0$ otherwise. The resulting random variables for corresponding weights is given by Table
+\eqref{table:RV_table}.
+\begin{table}[!ht]
+  \centering
+  \input{rv_table.tex}
+  \caption{Random Variables}
+  \label{table:RV_table}	
+\end{table}
+
 
 %Probability-----------------------------------------------
-We are required to find the probability when random variable exercise $X > 5$.
-Note that the number of bags with $X > 5$ is given by
+We are required to find the probability when random variable $X = 1$.
+Note that the number of bags with $X = 1$ is given by Table
+\eqref{table:RV_table}
+as
 \begin{align}
-  n(X > 5) = 7
+  n(X = 1) = 7
   \label{eq:FavOutcomes}
 \end{align}
 
@@ -284,13 +294,13 @@ The sample space $S$ consists of 11 bags. Hence
   \label{eq:TotOutcomes}
 \end{align}
 
-Hence the probability where $X > 5$ from
+Hence the probability where $X = 1$ from
 \eqref{eq:FavOutcomes}
 and
 \eqref{eq:TotOutcomes}
 is given by
 \begin{align}
-  P(X > 5) = \frac{n(X > 5)}{n(S)}
+  P(X = 1) = \frac{n(X = 1)}{n(S)}
   \\
   =\frac{7}{11}
   \\
