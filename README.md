@@ -1,2 +1,2 @@
 # AI1110_Assignments
-Currently on Assignment #5
+Currently on Assignment #6
