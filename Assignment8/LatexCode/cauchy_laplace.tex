@@ -1,0 +1,156 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Welcome to Overleaf --- just edit your LaTeX on the left,
+% and we'll compile it for you on the right. If you open the
+% 'Share' menu, you can invite other users to edit at the same
+% time. See www.overleaf.com/learn for more info. Enjoy!
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% Inbuilt themes in beamer
+\documentclass{beamer}
+
+% Theme choice:
+\usetheme{CambridgeUS}
+\usepackage{amsmath}
+
+\usepackage{array}
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+
+% Title page details: 
+\title{AI1110: Probability and Random Variables}
+\subtitle{Assignment 8: Papoulis-Pillai Ex 5-37}
+\author{Rishit D (cs21btech11053)}
+\institute{IIT Hyderabad}
+\date{\today}
+
+
+\begin{document}
+
+% Title page frame
+\begin{frame}
+    \titlepage 
+\end{frame}
+
+% Outline frame
+\begin{frame}{Outline}
+    \tableofcontents
+\end{frame}
+
+% Problem
+\section{Problem}
+
+\begin{frame}{Assignment 8}
+  \frametitle{Problem}
+  Show that
+  \begin{enumerate}
+  \item if $f(x)$ is a Cauchy density, then
+    \begin{align}
+      \phi(\omega) = e^{\alpha|\omega|}
+      \label{eq:CauchChar}
+    \end{align}
+  \item if $f(x)$ is a Laplace density, then
+    \begin{align}
+      \phi(\omega) = \frac{\alpha^2}{(\alpha^2 + \omega^2)}
+      \label{eq:LapChar}
+    \end{align}
+  \end{enumerate}
+\end{frame}
+
+% Solution
+\section{Solution}
+\subsection{Characteristic Equation of Given Density}
+%Characteristic Equation
+\begin{frame}
+  \frametitle{Characteristic Equation}
+  Given density function $p_X(x)$ for a random variable $X$, we define the characteristic equation to be:
+  \begin{block}{Characteristic Equation}
+    \begin{align}
+      \phi_X(\omega) = \int_{-\infty}^{\infty} e^{ix\omega} p_X(x) \,dx
+      \label{eq:CharEqn}
+    \end{align}
+    where $i = \sqrt(-1)$
+  \end{block}
+
+  Note that $\phi_X(\omega)$ is the Fourier transform of $p_X(x)$. Using properties of Fourier tranforms, we have the following inversion formula:
+  \begin{block}{Inversion Formula}
+    \begin{align}
+      p_X(x) = \frac{1}{2\pi} \int_{-\infty}^{\infty} \phi_X(\omega) e^{-ix\omega}\,\omega
+      \label{eq:InvEqn}
+    \end{align}
+  \end{block}
+\end{frame}
+
+\subsection{Part 1: Cauchy Density}
+%Cauchy Density
+\begin{frame}
+	\frametitle{Finding $p_X(x)$}
+	Using the Inversion Formula
+	\eqref{eq:InvEqn}
+	on given characteristic function for Cauchy distribution
+	\begin{align}
+		\phi_X(\omega) = e^{-\alpha|\omega|}
+		\label{eq:CauchyChar}
+	\end{align}
+	we have
+	\begin{align}
+		p_X(x) = \frac{1}{2\pi} \int_{-\infty}^{\infty} e^{-\alpha|\omega|} e^{-i\omega x} \,d\omega
+	\end{align}
+	\begin{align}
+		p_X(x) = \frac{1}{2\pi} \int_{-\infty}^{0} e^{\alpha\omega} e^{-i\omega x} \,d\omega + \int_{0}^{\infty} e^{-\alpha\omega} e^{-i\omega x} \,d\omega
+	\end{align}
+	\begin{align}
+		p_X(x) = \frac{1}{2\pi} \int_{-\infty}^{0} e^{-\omega(-\alpha + ix)} \,d\omega + \int_{0}^{\infty} e^{-\omega(\alpha + ix)} \,d\omega
+	\end{align}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Finding $p_X(x)$}
+	\begin{align}
+		p_X(x) = \frac{1}{2\pi} (\frac{e^{-\omega(-\alpha + ix)}}{-(-\alpha + ix)} \big|^{0}_{-\infty} + \frac{e^{-\omega(\alpha + ix)}}{-(\alpha + ix)} \big|^{\infty}_{0})
+	\end{align}
+	Assuming $\alpha > 0$, we have
+	\begin{align}
+		p_X(x) = \frac{1}{2\pi} (\frac{1}{\alpha - ix} + \frac{1}{\alpha + ix}) = \frac{\alpha}{\pi(\alpha^2 + x^2)}
+		\label{eq:CauchyDis}
+	\end{align}
+	which is the Cauchy Density function when $\mu = 0$.
+\end{frame}
+
+\subsection{Part 2: Laplace Density}
+%Laplace Density
+\begin{frame}
+	\frametitle{Finding $\phi_Y(\omega)$}
+	Using definition of the Characteristic function
+	\eqref{eq:CharEqn}
+	on Laplace density function given by
+	\begin{align}
+		p_Y(y) = \frac{\alpha e^{-\alpha|x|}}{2}
+		\label{eq:LapDis}
+	\end{align}
+	we have
+	\begin{align}
+		\phi_Y(\omega) = \int_{-\infty}^{\infty} \frac{\alpha e^{-\alpha|x|}}{2} e^{i\omega x} \,dx
+	\end{align}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Finding $\phi_Y(\omega)$}
+	\begin{align}
+		\phi_Y(\omega) = \int_{-\infty}^{0} \frac{\alpha e^{(\alpha + i\omega)x}}{2} \,dx + \int_{0}^{\infty} \frac{\alpha e^{(-\alpha + i\omega)x}}{2} \,dx
+	\end{align}
+	\begin{align}
+		\phi_Y(\omega) = \frac{\alpha}{2} (\frac{e^{(\alpha + i\omega)x}}{\alpha + i\omega} \big|_{-\infty}^{0} + \frac{e^{(-\alpha + i\omega)x}}{-\alpha + i\omega} \big|_{0}^{\infty}) 
+	\end{align}
+	Assuming $\alpha > 0$
+	\begin{align}
+		\phi_Y(\omega) = \frac{\alpha}{2} (\frac{1}{\alpha + i\omega} + \frac{1}{\alpha - i\omega}) = \frac{\alpha^2}{\alpha^2 + \omega^2}
+		\label{eq:LapChar}
+	\end{align}
+	which is the Laplace Characteristic function. We assume everywhere that $\mu = 0$.
+\end{frame}
+
+\end{document}
