@@ -1,0 +1,196 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Welcome to Overleaf --- just edit your LaTeX on the left,
+% and we'll compile it for you on the right. If you open the
+% 'Share' menu, you can invite other users to edit at the same
+% time. See www.overleaf.com/learn for more info. Enjoy!
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% Inbuilt themes in beamer
+\documentclass{beamer}
+
+% Theme choice:
+\usetheme{CambridgeUS}
+\usepackage{amsmath}
+
+\usepackage{array}
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+
+% Title page details: 
+\title{AI1110: Probability and Random Variables}
+\subtitle{Assignment 9: Papoulis-Pillai Ex 8-27}
+\author{Rishit D (cs21btech11053)}
+\institute{IIT Hyderabad}
+\date{\today}
+
+
+\begin{document}
+
+% Title page frame
+\begin{frame}
+	\titlepage 
+\end{frame}
+
+% Outline frame
+\begin{frame}{Outline}
+	\tableofcontents
+\end{frame}
+
+% Problem
+\section{Problem}
+
+\begin{frame}{Assignment 9}
+	\frametitle{Problem}
+	The weights of cereal boxes are the values of a random variable $x$ with mean $\eta$. We measure 64 boxes and find that $\bar{x} = 7.7 oz$ and $s = 1.5 oz$. Test the hypothesis $H_0 : \eta = 8 oz$ against $H_1 : \eta \neq 8 oz$ with $\alpha = 0.1$ and $\alpha = 0.01$.
+\end{frame}
+
+% Solution
+\section{Solution}
+
+% Definitions
+\subsection{Definitions}
+\begin{frame}
+	\frametitle{Percentile}
+	Given a distribution on random variable $x$ as $F_x(x)$, we define the $k^{th}$ percentile of this distribution as
+	\begin{align}
+		Percentile_k = F_x^{-1}(k)
+		\label{eq:Percentile}
+	\end{align}
+
+	In other words, the $k^{th}$ percentile returns the value of random variable $x_0$ for which $F_x(x_0) = k$.
+\end{frame}
+
+\begin{frame}
+	\frametitle{Hypothesis}
+	Let us assume, we are given a random variable $x$ whose distribution is $F(x, \theta)$ depending on some parameter $\theta$ (The parameter might be mean, variance etc.). We are required to use evidence that either supports or rejects a given prdeiction of the actual value of $\theta$, which we will call $\theta_0$.
+	
+	\begin{block}{Null Hypothesis}
+		In the null hypothesis, we make the prediction that $\theta = \theta_0$. This is represented by $H_0 : \theta = \theta_0$.
+	\end{block}
+	
+	\begin{block}{Alternate Hypothesis}
+		In the alternate hypothesis, we make the prediction that $\theta \neq \theta_0$. This is represented by $H_1 : \theta \neq \theta_0$. Note that the null hypothesis may be defined differently based on utility.
+	\end{block}	
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Testing Hypothesis}
+	To test whether a given hypothesis is feasible based on evidence, we first define a random variable $q$ whose density is convinient to plot and is a function of sample vector $X$ as follows.
+	\begin{align}
+		q = g(X)
+		\label{eq:TestStat}
+	\end{align}
+	We will call $q$ as the test statistic.
+
+	The density of random variable $q$ is given by $p_q(q, \theta)$ where $\theta$ is the parameter. Now consider the density $p_q(q, \theta_0)$ (based on $H_0$) and a region (Critical Region) $R_c$ where $p_q(q, \theta_0)$ is negligible. If we find that the value of $q$ lies in $R_c$, then we reject $H_0$.
+
+	One can decide the region $R_c$ using the significance level $\alpha$. $\alpha$ represents the probability that $q \in R_c$ when $H_0$ is true. Hence, when given a value of $\alpha$ one can determine $R_c$ and thereby check the validity of the null hypothesis. 
+\end{frame}
+
+\begin{frame}
+	\frametitle{Mean as Parameter: Unknown Variance}
+	Consider a random variable $x$, from which we have obtained a sample vector $X$. We are required to reject or support the hypothesis $H_0: \eta = \eta_0$ against $H_1: \eta \neq \eta_0$, where we check if the mean $\eta$ equals a constant $\eta_0$.
+
+	In the case that the variance is unknown but the sample mean $\bar{x}$ and sample variance $s^2$ are given, we must use a Student t distribution. Note that the sample vector $X$ has $n - 1$ degrees of freedom as we are constrained to ensure that the sum of the values of the vector $X - \bar{x}$ must be 0.
+
+	Assuming random variable $\bar{x}$ is represented by a normal distribution, we define test statistic $q$ as follows:
+	\begin{align}
+		q = \frac{\bar{x} - \eta_0}{s/\sqrt{n}}
+		\label{eq:UnknownVar}
+	\end{align}
+	
+	We see that the random variable $q$ obtains a Student t-distribution with $n - 1$ degrees of freedom.
+\end{frame}
+
+\begin{frame}
+	\frametitle{Mean as Parameter: Unknown Variance}
+	For an alternate hypothesis $H_1: \eta \neq \eta_0$ and given significance value $\alpha$, we note that the critical region $R_c$ is given by:
+	\begin{align}
+		R_c = (-\infty, t_{\alpha/2}(n - 1)) \cup (t_{1-\alpha/2}(n - 1), \infty)
+		\label{eq:CriticalReg}
+	\end{align}
+
+	where $t_k(n - 1)$ represents the $k^th$ percentile of the standard Student t-distribution. (As explained in \eqref{eq:Percentile})
+
+	We consider the $\alpha/2^{th}$ and its complementary percentile as the given hypothesis is double ended, i.e., it allows us accept values both slightly greater or less than the hypothesised mean value.
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Student t-distribution}
+	The Student t-distribution is used to estimate the mean of a normal distribution when it's variance is unknown. Given $n$ observations in a sample, the t-distribution (with $n - 1$ degrees of freedom) represents the sample mean with respect to the total mean.
+
+	The density of the Student t-distribution (with n degrees of freedom) is given by
+	\begin{align}
+		p_x(x) = \frac{1}{\sqrt{n\pi}\beta(n/2, 1/2)}(1 + \frac{x^2}{n})^\frac{-(n+1)}{2}
+	\end{align}
+\end{frame}
+
+% Stating hypothesis
+\subsection{Hypothesis}
+\begin{frame}
+	\frametitle{Stating the Hypothesis}
+	We state the null Hypothesis as
+	\begin{align}
+		H_0 : \eta = 8
+		\label{eq:NullHyp}
+	\end{align}
+	and the alternate hypothesis as
+	\begin{align}
+		H_1 : \eta \neq 8z
+		\label{eq:AltHyp}
+	\end{align}
+
+	We are required to test the above hypotheses for significance values $\alpha_1 = 0.1$ and $\alpha_2 = 0.01$.
+\end{frame}
+
+% Calculating test statistic
+\subsection{Test Statistic}
+\begin{frame}
+	\frametitle{Calculate Test Statistic $q$}
+	Given sample mean $\bar{x} = 7.7$ and sample variance $s = 1.5 oz$, we get our test statistic $q$ from
+	\eqref{eq:UnknownVar}
+	as
+	\begin{align}
+		q = \frac{7.7 - 8}{1.5/\sqrt{64}} = -1.6
+		\label{eq:QVal}
+	\end{align}
+
+	This represents the value of random variable $q$ with a Student t-distribution with mean $0$ and $n-1 = 63$ degrees of freedom.
+\end{frame}
+
+% Making Decision
+\subsection{Decision}
+\begin{frame}
+	\frametitle{Making Decision}
+	We shall determine the critical regions for given significance values $\alpha_1$ and $\alpha_2$ using
+	\eqref{eq:CriticalReg}
+
+	For $\alpha_1 = 0.01$, we find that $t_{0.005}(63) = -2.656$ and $t_{0.995}(63) = 2.656$. Hence critical region $R_{c1}$ is
+	\begin{align}
+		R_{c1} = (-\infty, -2.656) \cup (2.656, \infty)
+		\label{eq:Reg1}
+	\end{align}
+
+	Similarly for $\alpha_2 = 0.1$, we find that $t_{0.05}(63) = -1.669$ and $t_{0.95}(63) = 1.699$. Hence critical region $R_{c2}$ is
+	\begin{align}
+		R_{c2} = (-\infty, -1.699) \cup (1.699, \infty)
+		\label{eq:Reg2}
+	\end{align}
+	
+\end{frame}
+
+% Conclusion
+\subsection{Conclusion}
+\begin{frame}
+	\frametitle{Conclusion}
+	Note that using 
+	\eqref{eq:QVal}, \eqref{eq:Reg1}, \eqref{eq:Reg2}
+	we find that $q \notin R_{c1}$ and $q \notin R_{c2}$.
+
+	As a result, we can conclude that the evidence gathered does not reject the null hypothesis for both given significance values.
+\end{frame}
+\end{document}
