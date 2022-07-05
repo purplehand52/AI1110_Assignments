@@ -1042,8 +1042,8 @@ python3 pea_graph.py
 	We can write
 	\begin{align}
 		P_e &= P_{e|0} \pr{X = 1} + P_{e|1} \pr{X = -1} \\
-		&= \frac{1}{2}\left( 1 - Q(\delta - A) + Q(\delta + A) \right)
 		\label{eq:PEDelta}
+		&= \frac{1}{2}\left( 1 - Q(\delta - A) + Q(\delta + A) \right)
 	\end{align}
 	
 	To minimise this, we will find the value at $A$ when
@@ -1073,10 +1073,63 @@ python3 pea_graph.py
 
 \item Repeat the above exercise when 
 	\begin{align}
-		p_{X}(0) = p
+		p_{X}(-1) = p
+	\end{align}
+	\\
+	\solution
+	\\
+	Using \eqref{eq:PEDelta}, we have:
+	\begin{align}
+		P_e &= P_{e|0} \pr{X = 1} + P_{e|1} \pr{X = -1} \\
+		&= \left(p\right) \left(1 - Q(\delta-A)\right) + \left(1-p\right) \left(Q(\delta+A)\right)
 	\end{align}
 
+	We again minimise this, using
+	\begin{align}
+		\frac{dP_e}{dA} = 0
+	\end{align}
+	\begin{align}
+		\left(p\right) \frac{e^{-\frac{\left( \delta - A\right)^2}{2}}}{\sqrt{2\pi}} - \left(1-p\right) \frac{e^{-\frac{\left( \delta + A\right)^2}{2}}}{\sqrt{2\pi}} = 0
+	\end{align}
+	\begin{align}
+		\frac{p}{1-p} = e^{-2A\delta}
+	\end{align}
+	\begin{align}
+		\delta = \frac{1}{2A} \ln{\frac{1-p}{p}}
+	\end{align}
+	
+
 \item Repeat the above exercise using the MAP criterion.
+	\\
+	\solution
+	\\
+	We can deduce the PDF of X|Y is given by:
+	\begin{align}
+		p_{X|Y}(x|y) = \frac{p_{Y|X}(y|x) p_X(x)}{p_y(Y)}
+		\label{eq:Bayes}
+	\end{align}
+
+	Assuming $\pr{X = -1} = p$, we have $p_y(Y)$ using total probability theorem as:
+	\begin{align}
+		p_y(Y) &= p_{y|x}(Y|1) \pr{X=-1} + p_{y|x}(Y|1) \pr{X=1} \\
+		&= \left(p\right) p_y(-A+N) + \left(1-p\right) p_y(A+N) \\
+		&= \left(p\right) \frac{e^{-\frac{(y+A)^2}{2}}}{\sqrt{2\pi}} + \left(1-p\right) \frac{e^{-\frac{(y-A)^2}{2}}}{\sqrt{2\pi}}
+	\end{align}
+
+	Given a value of $Y = y$, $X = -1$, we have
+	\begin{align}
+		p_{X|Y}(-1|y) &= \frac{p_{Y|X}(y|-1) p_X(-1)}{p_y(Y)} \\
+		&= \frac{\left(p\right) e^{-\frac{(y+A)^2}{2}}}{\left(p\right) e^{-\frac{(y+A)^2}{2}} + \left(1-p\right) e^{-\frac{(x-A)^2}{2}}} \\
+		&= \frac{p}{p + \left(1-p\right) e^{yA}}
+	\end{align}
+
+	Given a value of $Y = y$, $X = 1$, we have
+	\begin{align}
+		p_{X|Y}(1|y) &= \frac{p_{Y|X}(y|1) p_X(1)}{p_y(Y)} \\
+		&= \frac{\left(1-p\right) e^{-\frac{(x-A)^2}{2}}}{\left(p\right) e^{-\frac{(x+A)^2}{2}} + \left(1-p\right) e^{-\frac{(x-A)^2}{2}}}
+		&= \frac{1-p}{p e^{yA} + \left(1-p\right)}
+	\end{align}
+
 
 \end{enumerate}
 
@@ -1201,6 +1254,15 @@ n_1,n_2 \sim \mathcal{N}(0,\,1).
 	%
 	
 \item
+	%
+	\begin{equation}
+	\mbf{y}|\mbf{s}_0 \text{ and } \mbf{y}|\mbf{s}_1
+	\end{equation}
+	%
+	on the same graph using a scatter plot.
+	%
+	
+\item
 	For the above problem, find a decision rule for detecting the symbols $\mbf{s}_0 $ and $\mbf{s}_1$.
 	%
 	
@@ -1212,12 +1274,3 @@ n_1,n_2 \sim \mathcal{N}(0,\,1).
 	with respect to the SNR from 0 to 10 dB.
 	%
 	
-\item
-	Obtain an expression for $P_e$. Verify this by comparing the theory and simulation plots on the same graph.
-	%
-
-\end{enumerate}
-
-\end{document}
-
-
