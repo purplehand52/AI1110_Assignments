@@ -274,3 +274,200 @@ fclose(fp);
 
 }
 //End function for generating Gaussian random numbers
+
+//Defining function to generate Bernoulli distribution {-1, 1}
+void bernoulli(char *str, int len)
+{
+int i;
+FILE *fp;
+double temp = 0;
+
+fp = fopen(str,"w");
+//Generate numbers
+for (i = 0; i < len; i++)
+{
+if((double)rand()/RAND_MAX < 0.5){
+	temp = -1;
+}
+else{
+	temp = 1;
+}
+fprintf(fp, "%lf\n", temp);
+}
+
+fclose(fp);
+}
+//End function to generate Bernoulli distribution {-1, 1}
+
+//Defining Random Variable Y
+void y_randvar(char *str, double a){
+int i;
+double x, n, y;
+
+//Files
+FILE *fp_ber, *fp_gau, *fp_new;
+fp_ber = fopen("ber.dat", "r");
+fp_gau = fopen("gau.dat", "r");
+fp_new = fopen(str, "w");
+
+//Generate numbers
+while ((fscanf(fp_ber, "%lf", &x) != EOF) && (fscanf(fp_gau, "%lf", &n) != EOF)){
+	y = a*x + n;
+	fprintf(fp_new, "%lf\n", y);
+}
+
+//Close
+fclose(fp_ber);
+fclose(fp_gau);
+fclose(fp_new);
+}
+//Ending definition of random variable Y
+
+//Define Probability error
+double prob_err(int i){
+	//Values
+	double x;
+	double y;
+	
+	//Load files
+	FILE *fp1, *fp2;
+	fp1 = fopen("ber.dat", "r");
+	fp2 = fopen("y.dat", "r");
+	
+	//Counting
+	double ber_pos = 0;
+	double ber_neg = 0;
+	double xy_0 = 0;
+	double xy_1 = 0;
+	
+	//Iterate through Bernoulli values
+	while(fscanf(fp1, "%lf", &x) != EOF){
+		fscanf(fp2, "%lf", &y);
+		
+		//Go through cases
+		//P e|0
+		if((x == 1) && (i == 1)){
+			if(y < 0) xy_0++;
+			ber_pos++;
+		}
+		
+		//P e|1
+		else if((x == -1) && (i == -1)){
+			if(y > 0) xy_1++;
+			ber_neg++;
+		}
+		
+		//If x = 1, general
+		else if(x == 1){
+			ber_pos++;
+			continue;
+		}
+		
+		//If x = -1, general
+		else{
+			ber_neg++;
+			continue;
+		}
+	}
+	
+	fclose(fp1);
+	fclose(fp2);
+		
+	//Return
+	if(i == 1) return xy_0/ber_pos;
+	else return xy_1/ber_neg;
+}
+
+//P_e value
+double prob_err_pe(){
+	double pe0, pe1;
+	pe0 = prob_err(1);
+	pe1 = prob_err(-1);
+	
+	return((pe0 + pe1)/2);
+}
+
+//P_e vs a
+void prob_err_a(char *str){
+	FILE *fp;
+	fp = fopen(str, "w");
+	
+	//Iterate through 20 values of a
+	double step_inc = 0.5;
+	double temp;
+	
+	for(int i = 1; i <= 20; i++){
+		y_randvar("y.dat", step_inc*i);
+		temp = prob_err_pe();
+		fprintf(fp, "%lf\n", temp);
+	}
+	
+	fclose(fp);
+	return;
+}
+
+//Chi_Generator
+void chi(char *str, int len)
+{
+int i,j,k;
+double temp1, temp2, chi_val;
+FILE *fp;
+
+fp = fopen(str,"w");
+//Generate numbers
+for (i = 0; i < len; i++)
+{
+	temp1 = 0;
+	temp2 = 0;
+	for (j = 0; j < 12; j++)
+	{
+		temp1 += (double)rand()/RAND_MAX;
+	}
+
+	for (k = 0; k < 12; k++){
+		temp2 += (double)rand()/RAND_MAX;
+	}
+	
+	temp1-=6;
+	temp2-=6;
+	
+	chi_val = temp1*temp1 + temp2*temp2;
+
+	fprintf(fp,"%lf\n",chi_val);
+}
+fclose(fp);
+}
+
+//Rayleigh_Generator
+void rayleigh(char *str, int len)
+{
+int i,j,k;
+double temp1, temp2, ray_val;
+FILE *fp;
+
+fp = fopen(str,"w");
+//Generate numbers
+for (i = 0; i < len; i++)
+{
+	temp1 = 0;
+	temp2 = 0;
+	for (j = 0; j < 12; j++)
+	{
+		temp1 += (double)rand()/RAND_MAX;
+	}
+
+	for (k = 0; k < 12; k++){
+		temp2 += (double)rand()/RAND_MAX;
+	}
+	
+	temp1-=6;
+	temp2-=6;
+	
+	ray_val = sqrt(temp1*temp1 + temp2*temp2);
+
+	fprintf(fp,"%lf\n",ray_val);
+}
+fclose(fp);
+}
+
+
