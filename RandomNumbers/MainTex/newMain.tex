@@ -345,7 +345,7 @@ Find a theoretical expression for $F_{U}(x)$.
 			1, & x \in (0, 1) \\
 			0, & otherwise
 		\end{cases}
-		\label{eq:PDF}
+		\label{eq:PDF_U}
 	\end{align}
 	
 	We know
@@ -528,15 +528,30 @@ repeat the above exercise theoretically.
 	\eqref{eq:Relation_3} and 
 	\eqref{eq:PDF_2}
 	\begin{align}
-		F_X(x) = \int_{-\infty}^{x} \frac{1}{\sqrt{2\pi}}\exp{\frac{-x^2}{2}} \,dx
+		F_X(x) = \int_{-\infty}^{x} \frac{1}{\sqrt{2\pi}}\exp{\left(-\frac{x^2}{2}\right)} \,dx
+		\label{eq:CDFInt}
 	\end{align}
 	
+	The Q-Function is defined as follows:
+	\begin{align}
+		Q(x) &= \Pr(X > x) \\
+		&= 1 - \Pr(X \leq x)
+		\label{eq:QFunc}
+	\end{align}
+
+	Hence, using \eqref{eq:QFunc}, we can write
+	\begin{align}
+		F_X(x) &= \Pr(X \leq x) \\
+		&= 1 - Q(x)
+		\label{eq:FinalCDF}
+	\end{align}
+
 	Mean for random variable $X$ is given by:
 	
 	\begin{align}
 		\mu_x &= E(X) \\
 		&= \int^{\infty}_{-\infty} x p_X(x) \,dx \\
-		&= \int^{\infty}_{-\infty} \frac{x}{\sqrt{2\pi}}\exp{\left(\frac{-x^2}{2}\right)} \,dx \\
+		&= \int^{\infty}_{-\infty} \frac{x}{\sqrt{2\pi}}\exp{\left(-\frac{x^2}{2}\right)} \,dx \\
 		&= \fbox{0}
 	\end{align}
 
@@ -561,7 +576,7 @@ repeat the above exercise theoretically.
 
 	Using integration by parts, we have:
 	\begin{align}
-		E(X^2) &= -x\sqrt{\frac{2}{\pi}} e^{\left(\frac{-x^2}{2}\right)}\Bigg|_{-\infty}^{\infty} +  \int^{\infty}_{-\infty} \sqrt{\frac{2}{\pi}} e^{\left(\frac{-x^2}{2}\right)} \,dx \\
+		E(X^2) &= -x\sqrt{\frac{2}{\pi}} e^{\left(-\frac{x^2}{2}\right)}\Bigg|_{-\infty}^{\infty} +  \int^{\infty}_{-\infty} \sqrt{\frac{2}{\pi}} e^{\left(-\frac{x^2}{2}\right)} \,dx \\
 		&= 1
 		\label{eq: MeanSec}
 	\end{align}
@@ -644,14 +659,14 @@ We know for any random variable $X$
 	\begin{align}
 		F_V(x) &= \Pr(V \leq x) \\
 		&= \Pr(-2\ln{(1 - U)} \leq x)\\
-		&= \Pr(\ln{(1 - U)} \geq \frac{-x}{2})\\
-		&= \Pr(1 - U \geq \exp{\frac{-x}{2}})\\
-		&= \Pr(U \leq 1 - \exp{\frac{-x}{2}})\\
-		&= F_U(1 - \exp{\frac{-x}{2}})
-		\label{eq: CDF_Rel}
+		&= \Pr(\ln{(1 - U)} \geq -\frac{x}{2}) \\
+		&= \Pr(1 - U \geq \exp{\left(-\frac{x}{2}\right)}) \\
+		&= \Pr(U \leq 1 - \exp{\left(-\frac{x}{2}\right)}) \\
+		&= F_U(1 - \exp{\left(-\frac{x}{2}\right)}) 
+		\label{eq:CDF_Rel}
 	\end{align}
 
-Note that the function $f(x) = 1 - \exp{\left(\frac{-x}{2}\right)}$ follows:
+Note that the function $f(x) = 1 - \exp{\left(-\frac{x}{2}\right)}$ follows:
 	\begin{align}
 		f(x) \in
 		\begin{cases}
@@ -665,15 +680,543 @@ Note that the function $f(x) = 1 - \exp{\left(\frac{-x}{2}\right)}$ follows:
 		F_V(x) = 
 		\begin{cases}
 			0, & x \in (-\infty, 0) \\
-			1 - \exp{\left(\frac{-x}{2}\right)}, & x \in (0, \infty)
+			1 - \exp{\left(-\frac{x}{2}\right)}, & x \in (0, \infty)
     		\end{cases}
 	\end{align}
 
 %
-%\item
-%Generate the Rayleigh distribution from Uniform. Verify your result through graphical plots.
 \end{enumerate}
 
+\section{Triangular Distribution}
+\begin{enumerate}[label=\thesection.\arabic*
+,ref=\thesection.\theenumi]
+%
+
+\item
+	Generate 
+	\begin{align}
+		T = U_1 + U_2
+		\label{eq:TriRV}
+	\end{align}
+	\\
+	\solution
+	\\
+	Execute the following code to generate samples of random variable $T$ in \verb|tri.dat|:
+	\begin{lstlisting}
+gcc exrand.c -lm
+./a.out
+	\end{lstlisting}
+
+\item
+	Find the CDF of T.
+	\\
+	\solution
+	\\
+	Execute the following code to generate CDF of T.
+	\begin{lstlisting}
+python3 tri_cdf.py
+	\end{lstlisting}
+
+	The CDF is plotted as shown in \eqref{fig:TriCDF_1}
+	\begin{figure}
+	\centering
+	\includegraphics[width=\columnwidth]{../figs/tri_cdf.png}
+	\caption{The CDF of $T$}
+	\label{fig:TriCDF_1}
+	\end{figure}
+
+\item
+	Find the PDF of T.
+	\\
+	\solution
+	\\
+	Execute the following code to generate PDF of T.
+	\begin{lstlisting}
+python3 tri_pdf.py
+	\end{lstlisting}
+
+	The PDF is plotted as shown in \eqref{fig:TriPDF_1}
+	\begin{figure}
+	\centering
+	\includegraphics[width=\columnwidth]{../figs/tri_pdf.png}
+	\caption{The PDF of $T$}
+	\label{fig:TriPDF_1}
+	\end{figure}
+
+\item
+	Find the theoretical expressions for the PDF and CDF of T.
+	\\
+	\solution
+	\\
+	Given a random variable $Z$ as:
+	\begin{align}
+		Z = X + Y
+	\end{align}
+	where $X$ and $Y$ are random variables, we can define
+
+	\begin{align}
+		p_Z(t) &= p_X(x) * p_Y(y) \\
+		&= \int_{-\infty}^{\infty} p_X(\tau) p_Y(t - \tau) \,d\tau
+		\label{eq:ConvZ}
+	\end{align}
+
+	Given $X = U$, $Y = U$ and $T = X + Y$, we have from \eqref{eq:ConvZ}
+	\begin{align}
+		p_T(t) &= \int_{-\infty}^{\infty} p_U(\tau) p_U(t - \tau) \,d\tau \\
+		&= \int_{0}^{1} p_U(t - \tau) \,d\tau \\
+		&= \int_{t-1}^{t} p_U(u) \,du
+		\label{eq:T_PDF_Int}
+	\end{align}
+
+	From \eqref{eq:PDF_U}, we can deduce that the above integral will be non-zero only when $(t-1, t) \cap (0, 1) \neq \emptyset$. Hence \eqref{eq:T_PDF_1} will be zero when $t < 0$ and $t > 2$.
+	
+	Consider the integral when $t \in (0, 1)$:
+	\begin{align}
+		p_T(t) &= \int_{t-1}^{t} p_U(u) \,du \\
+		&= \int_{0}^{t} p_U(u) \,du \\
+		&= \int_{0}^{t} 1 \,du \\
+		&= \fbox{t}
+		\label{eq:T_Case1}
+	\end{align}
+
+	Consider the integral when $t \in (1, 2)$:
+	\begin{align}
+		p_T(t) &= \int_{t-1}^{t} p_U(u) \,du \\
+		&= \int_{t-1}^{1} p_U(u) \,du \\
+		&= \fbox{2-t}
+		\label{eq:T_Case2}
+	\end{align}
+
+	Hence, we can state $p_T(t)$ as follows from \eqref{eq:T_Case1} and \eqref{eq:T_Case2}:
+	\begin{align}
+		p_T(t) =
+		\begin{cases}
+			0, & t \in (-\infty, 0) \\
+			t, & t \in (0, 1) \\
+			2 - t, & t \in (1, 2) \\
+			0, & t \in (0, \infty)
+		\end{cases}
+		\label{eq:T_PDF}
+	\end{align}
+
+	The CDF is related with the PDF as follows:
+	\begin{align}
+		F_T(t) = \int_{-\infty}^{t} p_T(t) \,dt
+		\label{eq:Relation}
+	\end{align}
+
+	Using \eqref{eq:Relation}, we have:
+	\begin{align}
+		F_T(t) =
+		\begin{cases}
+			0, & t \in (-\infty, 0) \\
+			\frac{t^2}{2}, & t \in (0, 1) \\
+			\frac{1 - (t-2)^2}{2}, & t \in (1, 2) \\
+			1, &t \in (0, \infty)
+		\end{cases}
+		\label{eq:T_CDF}
+	\end{align}
+
+\item
+	Verify your result for the PDF through a plot.
+	\\
+	\solution
+	\\
+	Execute the following code to generate theoretical and statistical PDF of T.
+	\begin{lstlisting}
+python3 tri_pdf.py
+	\end{lstlisting}
+	\begin{figure}
+	\centering
+	\includegraphics[width=\columnwidth]{../figs/tri_pdf_comp.png}
+	\caption{The PDF of $T$}
+	\label{fig:TriPDF_2}
+	\end{figure}
+	
+	The plot is shown in figure \eqref{fig:TriPDF_2}.
+
+\item
+	Verify your result for the CDF through a plot.
+	\\
+	\solution
+	\\
+	Execute the following code to generate theoretical and statistical CDF of T.
+	\begin{lstlisting}
+python3 tri_cdf.py
+	\end{lstlisting}
+	\begin{figure}
+	\centering
+	\includegraphics[width=\columnwidth]{../figs/tri_cdf_comp.png}
+	\caption{The CDF of $T$}
+	\label{fig:TriCDF_2}
+	\end{figure}
+	
+	The plot is shown in figure \eqref{fig:TriCDF_2}
+
+\end{enumerate}
+
+\section{Maximum Likelihood}
+\begin{enumerate}[label=\thesection.\arabic*
+,ref=\thesection.\theenumi]
+
+\item Generate equiprobable $X \in \cbrak{1,-1}$.
+	\\
+	\solution
+	\\
+	We can generate samples for equiprobable random variable $X$ using the following code:
+	\begin{lstlisting}
+gcc exrand.c -lm
+./a.out
+	\end{lstlisting}
+	The samples generated are stored in \verb|ber.dat|.
+
+\item Generate 
+	\begin{equation}
+	Y = AX+N,
+	\end{equation}
+		where $A = 5 \text{dB}, X \in \cbrak{1,-1}$, is Bernoulli and $N \sim \mathcal{N}(0,\,1)$.
+	\\
+	\solution
+	\\
+	We can generate samples for random variable $Y$ using the following code:
+	\begin{lstlisting}
+gcc exrand.c -lm
+./a.out
+	\end{lstlisting}
+	The samples generated are stored in \verb|y.dat|.
+
+\item Plot $Y$.
+	\\
+	\solution
+	\\
+	We use the following code to plot all samples of $Y$.
+	\begin{lstlisting}
+python3 y_plot.py
+	\end{lstlisting}
+	The plot generated is shown in figure \eqref{fig:YPlot}.
+
+	\begin{figure}
+	\centering
+	\includegraphics[width=\columnwidth]{../figs/y_plot.png}
+	\caption{Random Variable $Y$ at $A = 5.0$}
+	\label{fig:YPlot}
+	\end{figure}
+
+\item Guess how to estimate $X$ from $Y$.
+	\\
+	\solution
+	\\
+	One can roughly estimate $X$ from $Y$ as it is most probable that when $X > 0$, then $Y > 0$. Hence,
+	\begin{align}
+		X =
+		\begin{cases}
+			1, & Y > 0 \\
+			-1, & Y < 0
+		\end{cases}
+		\label{eq: Estimate}
+	\end{align}
+
+\item
+	\label{ml-ch4_sim}
+	Find 
+	\begin{equation}
+		P_{e|0} = \pr{\hat{X} = -1|X=1}
+	\end{equation}
+	and 
+	\begin{equation}
+		P_{e|1} = \pr{\hat{X} = 1|X=-1}
+	\end{equation}
+	\\
+	\solution
+	\\
+	We can use the following code to find $P_{e|0}$ and $P_{e|1}$ as:
+	\begin{lstlisting}
+gcc exrand.c -lm
+./a.out
+	\end{lstlisting}
+
+	In the case where $A = 2.5$, we obtain $P_{e|0} = 0.005478$ and $P_{e|1} = 0.005660$.
+	
+\item Find $P_e$ assuming that $X$ has equiprobable symbols.
+	\\
+	\solution
+	\\
+	We can use the following code to find $P_{e}$:
+	\begin{lstlisting}
+gcc exrand.c -lm
+./a.out
+	\end{lstlisting}
+
+	In the case where $A = 2.5$, we obtain $P_{e} = 0.005569$.
+
+\item Verify by plotting the theoretical $P_e$ with respect to $A$ from 0 to 10 dB.  
+	\\
+	\solution
+	\\
+	\begin{align}
+		P_{e|0} &= \pr{\hat{X} = -1|X = 1} \\
+		&= \frac{\pr{\hat{X} = -1, X = 1}}{\pr{X = 1}}
+	\end{align}
+
+	Using \eqref{eq: Estimate}
+	\begin{align}
+		P_{e|0} &= \frac{\pr{Y < 0, X = 1}}{\pr{X = 1}} \\
+		&= \pr{A + N < 0} \\
+		&= \pr{N < -A} \\
+		&= 1 - \pr{N \geq -A}\\
+		&= 1 - Q(-A)
+		\label{eq:PE0}
+	\end{align}
+
+	Similarly, we can write
+	\begin{align}
+		P_{e|1} &= \pr{\hat{X} = 1|X = -1} \\
+		&= \frac{\pr{\hat{X} = 1, X = -1}}{\pr{X = -1}} \\
+		&= \frac{\pr{Y > 0, X = -1}}{\pr{X = -1}} \\
+		&= \pr{-A + N > 0} \\
+		&= \pr{N > A} \\
+		&= Q(A)
+		\label{eq:PE1}
+	\end{align}
+	
+	Hence, we can determine $P_e$ as follows:
+	\begin{align}
+		P_e &= P_{e|0} \pr{X = 1} + P_{e|1} \pr{X = -1} \\
+		&= \frac{1}{2}\left( Q(A) + 1 - Q(-A) \right) \\
+		&= \frac{1}{2}\left( 2Q(A) \right) \\
+		&= Q(A)
+		\label{eq:PE}
+	\end{align}
+
+	Note that $\pr{X = 1} = \pr{X = -1} = \frac{1}{2}$ and $Q(A) + Q(-A) = 1$.
+	
+	We first generate statistically, various values of $P_e$ for different values of $a$. We execute the following code to generate sample:
+	\begin{lstlisting}
+gcc exrand.c -lm
+./a.out
+	\end{lstlisting}
+	The samples are now generated in \verb|pe_a.dat|.
+	
+	To observe the theoretical plot and the statistical values of $P_e$ vs $a$, we execute the following code:
+	\begin{lstlisting}
+python3 pea_graph.py
+	\end{lstlisting}
+	
+\item Now, consider a threshold $\delta$ while estimating $X$ from $Y$. Find the value of $\delta$ that minimizes the theoretical $P_e$.
+	\\
+	\solution
+	\\
+	Assuming the threshold to be $\delta$, we can estimate $X$ from $Y$:
+	\begin{align}
+		X =
+		\begin{cases}
+			1, & Y > \delta \\
+			-1, & Y < \delta
+		\end{cases}
+		\label{eq: Estimate}
+	\end{align}
+	
+	In this case
+	\begin{align}
+		P_{e|0} &= \pr{\hat{X} = -1|X = 1} \\
+		&= \frac{\pr{\hat{X} = -1, X = 1}}{\pr{X = 1}} \\
+		&= \frac{\pr{Y < \delta, X = 1}}{\pr{X = 1}} \\
+		&= \pr{A + N < \delta} \\
+		&= \pr{N < \delta - A} \\
+		&= 1 - \pr{N \geq \delta - A}\\
+		&= 1 - Q(\delta - A)
+		\label{eq:PE0Delta}
+	\end{align}
+	
+	Similarly
+	\begin{align}
+		P_{e|1} &= \pr{\hat{X} = 1|X = -1} \\
+		&= \frac{\pr{\hat{X} = 1, X = -1}}{\pr{X = -1}} \\
+		&= \frac{\pr{Y > \delta, X = -1}}{\pr{X = -1}} \\
+		&= \pr{-A + N > \delta} \\
+		&= \pr{N > \delta + A} \\
+		&= Q(\delta + A)
+		\label{eq:PE1Delta}
+	\end{align}
+	
+	We can write
+	\begin{align}
+		P_e &= P_{e|0} \pr{X = 1} + P_{e|1} \pr{X = -1} \\
+		&= \frac{1}{2}\left( 1 - Q(\delta - A) + Q(\delta + A) \right)
+		\label{eq:PEDelta}
+	\end{align}
+	
+	To minimise this, we will find the value at $A$ when
+	\begin{align}
+		\frac{dP_e}{dA} = 0 
+	\end{align}
+	\begin{align}
+		\frac{1}{2} \frac{d}{dA}\left( 1 - Q(\delta - A) + Q(\delta + A) \right) = 0
+	\end{align}
+	\begin{align}
+		\frac{e^{-\frac{\left( \delta - A\right)^2}{2}}}{\sqrt{2\pi}} - \frac{e^{-\frac{\left( \delta + A\right)^2}{2}}}{\sqrt{2\pi}} = 0
+	\end{align}
+	\begin{align}
+		e^{-\frac{\left( \delta - A\right)^2}{2}} = e^{-\frac{\left( \delta + A\right)^2}{2}}
+	\end{align}
+	\begin{align}
+		\frac{\left( \delta - A\right)^2}{2} = \frac{\left( \delta + A\right)^2}{2}
+	\end{align}
+	\begin{align}
+		\left( \delta - A\right)^2 = \left( \delta + A\right)^2 \\
+	\end{align}
+	\begin{align}
+		\delta = 0
+		\label{eq:AValue}
+	\end{align}
+	
+
+\item Repeat the above exercise when 
+	\begin{align}
+		p_{X}(0) = p
+	\end{align}
+
+\item Repeat the above exercise using the MAP criterion.
+
+\end{enumerate}
+
+\section{Gaussian to Other}
+\begin{enumerate}[label=\thesection.\arabic*
+,ref=\thesection.\theenumi]
+
+\item Let $X_1 \sim \mathcal{N}(0,\,1)$ and $X_2 \sim \mathcal{N}(0,\,1)$. Plot the CDF and PDF of
+	
+	\begin{equation}
+	V = X_1^2 + X_2^2
+	\end{equation}
+	
+\item If
+	%
+	\begin{equation}
+	F_{V}(x) = 
+	\begin{cases}
+	1 - e^{-\alpha x} & x \geq 0 \\
+	0 & x < 0,
+	\end{cases}
+	\end{equation}
+	%
+	find $\alpha$.
+	%
+
+\item
+	\label{ch3_raleigh_sim}
+	Plot the CDF and PDf of
+	%
+	\begin{equation}
+	A = \sqrt{V}
+	\end{equation}
+	%
+	
+\end{enumerate}
+
+\section{Conditional Probability}
+\begin{enumerate}[label=\thesection.\arabic*
+,ref=\thesection.\theenumi]
+
+\item
+
+\item
+	\label{ch4_sim}
+	Plot 
+	\begin{equation}
+	P_e = \pr{\hat{X} = -1|X=1}
+	\end{equation}
+	%
+	for 
+	\begin{equation}
+	Y = AX+N,
+	\end{equation}
+	where $A$ is Raleigh with $E\sbrak{A^2} = \gamma, N \sim \mathcal{N}(0,\,1), X \in \brak{-1,1}$ for $0 \le \gamma \le 10$ dB.
+	%
+	
+\item
+	Assuming that $N$ is a constant, find an expression for $P_e$.  Call this $P_e(N)$
+	%
+	
+\item
+	%
+	\label{ch4_anal}
+	For a function $g$,
+	\begin{equation}
+	E\sbrak{g(X)} = \int_{-\infty}^{\infty}g(x)p_{X}(x)\, dx
+	\end{equation}
+	%
+	Find $P_e = E\sbrak{P_e(N)}$.
+	%
+	
+\item
+	Plot $P_e$ in problems \ref{ch4_sim} and \ref{ch4_anal} on the same graph w.r.t $\gamma$.  Comment.
+
+\end{enumerate}
+
+\section{Two Dimensions}
+Let 
+\begin{equation}
+\mbf{y} = A\mbf{x} + \mbf{n},
+\end{equation}
+where 
+\begin{align}
+x &\in \brak{\mbf{s}_0,\mbf{s}_1}, 
+\mbf{s}_0 = 
+\begin{pmatrix}
+1 
+\\
+0
+\end{pmatrix},
+\mbf{s}_1 = 
+\begin{pmatrix}
+0 
+\\
+1
+\end{pmatrix}
+\\
+\mbf{n} &= 
+\begin{pmatrix}
+n_1
+\\
+n_2
+\end{pmatrix},
+n_1,n_2 \sim \mathcal{N}(0,\,1).
+\end{align}
+%
+
+\begin{enumerate}[label=\thesection.\arabic*
+,ref=\thesection.\theenumi]
+%%
+
+\item
+	\label{ch5_fsk}
+	Plot 
+	%
+	\begin{equation}
+	\mbf{y}|\mbf{s}_0 \text{ and } \mbf{y}|\mbf{s}_1
+	\end{equation}
+	%
+	on the same graph using a scatter plot.
+	%
+	
+\item
+	For the above problem, find a decision rule for detecting the symbols $\mbf{s}_0 $ and $\mbf{s}_1$.
+	%
+	
+\item
+	Plot 
+	\begin{equation} 
+	P_e = \pr{\hat{\mbf{x}} = \mbf{s}_1|\mbf{x} = \mbf{s}_0}
+	\end{equation}
+	with respect to the SNR from 0 to 10 dB.
+	%
+	
+\item
+	Obtain an expression for $P_e$. Verify this by comparing the theory and simulation plots on the same graph.
+	%
+
+\end{enumerate}
 
 \end{document}
 
