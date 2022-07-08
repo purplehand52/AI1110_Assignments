@@ -1001,6 +1001,16 @@ gcc exrand.c -lm
 	\begin{lstlisting}
 python3 pea_graph.py
 	\end{lstlisting}
+
+	The plot generated is shown in the figure \eqref{PeaPlot}
+	\begin{figure}
+	\centering
+	\includegraphics[width=\columnwidth]{../figs/pea_plot.png}
+	\caption{$P_e$ vs $a$}
+	\label{fig:PeaPlot}
+	\end{figure}
+
+
 	
 \item Now, consider a threshold $\delta$ while estimating $X$ from $Y$. Find the value of $\delta$ that minimizes the theoretical $P_e$.
 	\\
@@ -1013,7 +1023,6 @@ python3 pea_graph.py
 			1, & Y > \delta \\
 			-1, & Y < \delta
 		\end{cases}
-		\label{eq: Estimate}
 	\end{align}
 	
 	In this case
