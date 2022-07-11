@@ -18,6 +18,9 @@ int main(void) //main function begins
 //Bernoulli
 //bernoulli("ber.dat", 1000000);
 
+//Triangular
+//triangular("tri.dat", 1000000);
+
 //Random Variable Y
 //y_randvar("y.dat", 5.0);
 
@@ -29,13 +32,22 @@ int main(void) //main function begins
 //printf("P_E: %lf\n", prob_err_pe());
 
 //Plot PE vs A
-//prob_err_a("pe_a.dat");
+//prob_err_a("pe_a.dat", "y.dat");
 
 //Chi Plot
 //chi("chi.dat", 1000000);
 
 //Rayleigh Plot
-//rayleigh("ray.dat", 1000000);
+//rayleigh("ray.dat", 1000000, 2);
+
+//New Rayleigh Plot
+//rayleigh("a.dat", 1000000, 5);
+
+//New Values of Y
+//y_randvar_ray("newY.dat", 1.0);
+
+//Plot PE vs A (for Rayleigh)
+prob_err_sigma("peaRay_new.dat");
 
 return 0;
 }

@@ -768,7 +768,7 @@ python3 tri_pdf.py
 		\label{eq:T_PDF_Int}
 	\end{align}
 
-	From \eqref{eq:PDF_U}, we can deduce that the above integral will be non-zero only when $(t-1, t) \cap (0, 1) \neq \emptyset$. Hence \eqref{eq:T_PDF_1} will be zero when $t < 0$ and $t > 2$.
+	From \eqref{eq:T_PDF_Int}, we can deduce that the above integral will be non-zero only when $(t-1, t) \cap (0, 1) \neq \emptyset$. Hence \eqref{eq:T_PDF_Int} will be zero when $t < 0$ and $t > 2$.
 	
 	Consider the integral when $t \in (0, 1)$:
 	\begin{align}
@@ -1002,12 +1002,19 @@ gcc exrand.c -lm
 python3 pea_graph.py
 	\end{lstlisting}
 
-	The plot generated is shown in the figure \eqref{PeaPlot}
+	The plot generated is shown in the figures \eqref{fig:PeaPlot} and \eqref{fig:PeaPlotNew}
 	\begin{figure}
 	\centering
 	\includegraphics[width=\columnwidth]{../figs/pea_plot.png}
 	\caption{$P_e$ vs $a$}
 	\label{fig:PeaPlot}
+	\end{figure}
+	
+	\begin{figure}
+	\centering
+	\includegraphics[width=\columnwidth]{../figs/pea_plot_semi.png}
+	\caption{Semilog: $P_e$ vs $a$}
+	\label{fig:PeaPlotNew}
 	\end{figure}
 
 
@@ -1398,7 +1405,7 @@ python3 ray_cdf.py
 	\begin{equation}
 	Y = AX+N,
 	\end{equation}
-	where $A$ is Raleigh with $E\sbrak{A^2} = \gamma, N \sim \mathcal{N}(0,\,1), X \in \brak{-1,1}$ for $0 \le \gamma \le 10$ dB.
+	where $A$ is Raleigh with $E\sbrak{A^2} = \gamma, N \sim \mathcal{N}(0,\,1), X \in \cbrak{-1,1}$ for $0 \le \gamma \le 10$ dB.
 	%
 	
 \item

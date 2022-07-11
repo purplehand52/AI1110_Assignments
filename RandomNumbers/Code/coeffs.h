@@ -190,6 +190,23 @@ return c;
 }
 //End function for transpose of matrix
 
+//Gaussian with mean 0, variance sigma^2
+double gaussGen(double sigma)
+{
+	double tempSum = 0;
+	for (int i = 0; i < 12; i++)
+	{
+		tempSum += (double)rand()/RAND_MAX;
+	}
+
+	tempSum -= 6;
+	tempSum *= sigma;
+
+	return(tempSum);
+}
+
+
+
 //Defining the function for generating uniform random numbers
 void uniform(char *str, int len)
 {
@@ -299,6 +316,22 @@ fclose(fp);
 }
 //End function to generate Bernoulli distribution {-1, 1}
 
+//Triangular Distribution
+void triangular(char *str, int len){
+uniform("trial1.dat", len);
+uniform("trial2.dat", len);
+
+fp = fopen(str, "w");
+f1 = fopen("trial1.dat", "r");
+f2 = fopen("trial2.dat", "r");
+
+double x, y
+
+while((fscanf(f1, "%lf", &x) != EOF) && (fscanf(f2, "%lf", &y) != EOF)){
+	fprintf(fp, "%lf\n", x + y);
+}	
+}
+
 //Defining Random Variable Y
 void y_randvar(char *str, double a){
 int i;
@@ -323,8 +356,8 @@ fclose(fp_new);
 }
 //Ending definition of random variable Y
 
-//Define Probability error
-double prob_err(int i){
+//Define Probability error: File contains samples of Y
+double prob_err(int i, char *str ){
 	//Values
 	double x;
 	double y;
@@ -332,7 +365,7 @@ double prob_err(int i){
 	//Load files
 	FILE *fp1, *fp2;
 	fp1 = fopen("ber.dat", "r");
-	fp2 = fopen("y.dat", "r");
+	fp2 = fopen(str, "r");
 	
 	//Counting
 	double ber_pos = 0;
@@ -378,17 +411,17 @@ double prob_err(int i){
 	else return xy_1/ber_neg;
 }
 
-//P_e value
-double prob_err_pe(){
+//P_e value: File contains samples of Y
+double prob_err_pe(char *str){
 	double pe0, pe1;
-	pe0 = prob_err(1);
-	pe1 = prob_err(-1);
+	pe0 = prob_err(1, str);
+	pe1 = prob_err(-1, str);
 	
 	return((pe0 + pe1)/2);
 }
 
 //P_e vs a
-void prob_err_a(char *str){
+void prob_err_a(char *str, char *data){
 	FILE *fp;
 	fp = fopen(str, "w");
 	
@@ -397,8 +430,8 @@ void prob_err_a(char *str){
 	double temp;
 	
 	for(int i = 1; i <= 20; i++){
-		y_randvar("y.dat", step_inc*i);
-		temp = prob_err_pe();
+		y_randvar(data, step_inc*i);
+		temp = prob_err_pe(data);
 		fprintf(fp, "%lf\n", temp);
 	}
 	
@@ -406,62 +439,46 @@ void prob_err_a(char *str){
 	return;
 }
 
-//Chi_Generator
-void chi(char *str, int len)
+//Chi Squared_Generator
+void chi(char *str, int len, int deg)
 {
 int i,j,k;
-double temp1, temp2, chi_val;
+double temp, chi_val;
 FILE *fp;
 
 fp = fopen(str,"w");
 //Generate numbers
 for (i = 0; i < len; i++)
 {
-	temp1 = 0;
-	temp2 = 0;
-	for (j = 0; j < 12; j++)
-	{
-		temp1 += (double)rand()/RAND_MAX;
-	}
-
-	for (k = 0; k < 12; k++){
-		temp2 += (double)rand()/RAND_MAX;
+	for(int j = 0; j < deg; j++){
+	
+		temp = gaussGen(1.0);
+		chi_val += temp*temp; 
+		
 	}
 	
-	temp1-=6;
-	temp2-=6;
-	
-	chi_val = temp1*temp1 + temp2*temp2;
-
 	fprintf(fp,"%lf\n",chi_val);
 }
 fclose(fp);
 }
 
 //Rayleigh_Generator
-void rayleigh(char *str, int len)
+void rayleigh(char *str, int len, double gamma)
 {
 int i,j,k;
 double temp1, temp2, ray_val;
 FILE *fp;
 
 fp = fopen(str,"w");
+
+//Find sigma (gamma = 2*sigma^2)
+double sigma = sqrt(gamma/2);
+
 //Generate numbers
 for (i = 0; i < len; i++)
 {
-	temp1 = 0;
-	temp2 = 0;
-	for (j = 0; j < 12; j++)
-	{
-		temp1 += (double)rand()/RAND_MAX;
-	}
-
-	for (k = 0; k < 12; k++){
-		temp2 += (double)rand()/RAND_MAX;
-	}
-	
-	temp1-=6;
-	temp2-=6;
+	temp1 = gaussGen(sigma);
+	temp2 = gaussGen(sigma);
 	
 	ray_val = sqrt(temp1*temp1 + temp2*temp2);
 
@@ -469,5 +486,52 @@ for (i = 0; i < len; i++)
 }
 fclose(fp);
 }
+//Defining Random Variable Y using Rayleigh
+void y_randvar_ray(char *str, char* aVal){
+int i;
+double x, n, y, a;
 
+//Files
+FILE *fp_ber, *fp_gau, *fp_new, *fp_ray;
+fp_ber = fopen("ber.dat", "r");
+fp_gau = fopen("gau.dat", "r");
+fp_ray = fopen(aVal, "r");
+fp_new = fopen(str, "w");
+
+//Generate numbers
+while ((fscanf(fp_ber, "%lf", &x) != EOF) && (fscanf(fp_gau, "%lf", &n) != EOF) && (fscanf(fp_ray, "%lf", &a) != EOF)){
+	y = a*x + n;
+	fprintf(fp_new, "%lf\n", y);
+}
+
+//Close
+fclose(fp_ber);
+fclose(fp_gau);
+fclose(fp_ray);
+fclose(fp_new);
+}
+//Ending definition of random variable Y
+
+//P_e vs sigma 
+void prob_err_sigma(char *str){
+	FILE *fp;
+	fp = fopen(str, "w");
+	
+	//Iterate through 20 values of gamma
+	double step_inc = 0.5;
+	double temp;
+	
+	for(int i = 1; i <= 20; i++){
+		FILE *fp_ray = fopen("trial.dat", "w");
+		FILE *fp_ynew = fopen("y_new.dat", "w");
+		rayleigh("trial.dat", 1000000, step_inc*i);
+		y_randvar_ray("y_new.dat", "trial.dat");
+		temp = prob_err_pe("y_new.dat");
+		fprintf(fp, "%lf\n", temp);
+		fclose(fp_ray);
+	}
+	
+	fclose(fp);
+	return;
+}
 
